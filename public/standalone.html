@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy-first screen time tracker with ML-powered insights. Track, understand, and improve your digital habits without compromising privacy.">
+    <meta name="keywords" content="screen time tracker, digital wellbeing, privacy-first, app usage, ML analytics">
+    <meta property="og:title" content="Digital Wellbeing Tracker — Reclaim Your Focus">
+    <meta property="og:description" content="Track, understand, and improve your digital habits with privacy-first analytics.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Digital Wellbeing Tracker",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Windows, Linux",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Privacy-first desktop app for screen time analytics with ML-powered insights"
+    }
+    </script>
+    <title>Digital Wellbeing Tracker — Reclaim Your Focus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6b4fc9;
+            --accent: #2dd4a4;
+            --dark-bg: #0f1419;
+            --light-bg: #fafbfc;
+            --text-dark: #1a202c;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --dark-border: #334155;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: #f1f5f9;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+        }
+
+        body.dark-mode header {
+            background: rgba(15, 20, 25, 0.8);
+            border-bottom-color: var(--dark-border);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .logo-box {
+            width: 32px;
+            height: 32px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            transition: transform 0.3s;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: white;
+        }
+
+        .cta-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            background: #5a42a8;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(107, 79, 201, 0.05) 0%, rgba(45, 212, 164, 0.05) 100%);
+        }
+
+        body.dark-mode .hero {
+            background: linear-gradient(135deg, rgba(107, 79, 201, 0.1) 0%, rgba(45, 212, 164, 0.1) 100%);
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        body.dark-mode .hero p {
+            color: #cbd5e1;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            background: transparent;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            section h2 {
+                font-size: 1.875rem;
+            }
+        }
+
+        section > .container > p:nth-of-type(1) {
+            text-align: center;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            font-size: 1.125rem;
+        }
+
+        body.dark-mode section > .container > p {
+            color: #cbd5e1;
+        }
+
+        /* Features Grid */
+        .features {
+            background-color: rgba(107, 79, 201, 0.03);
+        }
+
+        body.dark-mode .features {
+            background-color: rgba(107, 79, 201, 0.1);
+        }
+
+        .grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .card {
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: white;
+            transition: all 0.3s;
+        }
+
+        body.dark-mode .card {
+            background: #1e293b;
+            border-color: var(--dark-border);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(107, 79, 201, 0.1);
+        }
+
+        .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            background: rgba(107, 79, 201, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.125rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+            line-height: 1.6;
+        }
+
+        body.dark-mode .card p {
+            color: #cbd5e1;
+        }
+
+        /* How It Works */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(107, 79, 201, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        /* Download Section */
+        .download {
+            background: rgba(107, 79, 201, 0.03);
+        }
+
+        .download-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .code-block {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        body.dark-mode .code-block {
+            background: #0f1419;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial {
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: white;
+        }
+
+        body.dark-mode .testimonial {
+            background: #1e293b;
+            border-color: var(--dark-border);
+        }
+
+        .testimonial p:first-child {
+            font-style: italic;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .testimonial p:first-child {
+            color: #cbd5e1;
+        }
+
+        .testimonial .author {
+            font-weight: bold;
+        }
+
+        .testimonial .role {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        body.dark-mode .testimonial .role {
+            color: #cbd5e1;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 2rem auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        body.dark-mode .faq-item {
+            background: #1e293b;
+            border-color: var(--dark-border);
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            background: white;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        body.dark-mode .faq-question {
+            background: #1e293b;
+        }
+
+        .faq-question:hover {
+            background: rgba(107, 79, 201, 0.05);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 1.25rem;
+        }
+
+        .faq-answer.open {
+            max-height: 500px;
+            padding: 1.25rem;
+            border-top: 1px solid var(--border);
+        }
+
+        body.dark-mode .faq-answer.open {
+            border-top-color: var(--dark-border);
+        }
+
+        /* Footer */
+        footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        body.dark-mode footer {
+            background: #1e293b;
+            border-top-color: var(--dark-border);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        footer h4 {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--primary);
+        }
+
+        body.dark-mode footer a {
+            color: #cbd5e1;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        body.dark-mode .footer-bottom {
+            border-top-color: var(--dark-border);
+            color: #cbd5e1;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                display: none;
+            }
+
+            section {
+                padding: 2rem 0;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <div class="logo-box">DW</div>
+                <span class="hidden-sm">DWT</span>
+            </div>
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#features">Features</a>
+                <a href="#demo">Demo</a>
+                <a href="#download">Download</a>
+                <a href="#docs">Docs</a>
+                <a href="#contact">Contact</a>
+            </nav>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                <a href="#download" class="cta-btn">Download App</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    <span class="gradient-text">Reclaim Your</span><br>
+                    <span>Digital</span><br>
+                    <span>Wellbeing</span>
+                </h1>
+                <p>Track. Understand. Improve — Privacy-first screen time analytics for desktop. Monitor your app usage in real-time with zero cloud tracking.</p>
+                <div class="hero-buttons">
+                    <button class="cta-btn" onclick="document.getElementById('download').scrollIntoView({behavior: 'smooth'})">Download for Free →</button>
+                    <a href="https://github.com" target="_blank" class="btn-secondary">📘 View on GitHub</a>
+                </div>
+                <p style="font-size: 0.875rem; color: var(--text-light);">✓ Privacy-first • ✓ ML-powered insights • ✓ Open source</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2>Powerful Features for Digital Health</h2>
+            <p>Everything you need to understand and improve your screen time habits</p>
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="icon">📊</div>
+                    <h3>Real-time App Tracking</h3>
+                    <p>Lightweight monitoring that doesn't slow down your system — see what's running instantly.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔒</div>
+                    <h3>Privacy-first Local Storage</h3>
+                    <p>Your data never leaves your machine. SQLite database, zero cloud sync by default.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <h3>ML-based Pattern Analysis</h3>
+                    <p>K-Means clustering reveals your usage patterns and helps identify time sinks.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔔</div>
+                    <h3>Voice Reminders & Nudges</h3>
+                    <p>Configurable audio alerts remind you to take breaks and stay focused.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <p>Three simple steps to better digital habits</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Track</h3>
+                    <p>Install and let it monitor your apps passively</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Analyze</h3>
+                    <p>View charts and ML-generated insights weekly</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Act</h3>
+                    <p>Get nudges and adjust habits based on data</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="download" id="download">
+        <div class="container">
+            <h2>Download & Install</h2>
+            <p>Available for Windows, Linux, and Python environments</p>
+            <div class="download-cards">
+                <div class="card">
+                    <h3>Windows</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">Direct Download</p>
+                    <div class="code-block">.exe Download</div>
+                </div>
+                <div class="card">
+                    <h3>Linux</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">Terminal Command</p>
+                    <div class="code-block">sudo apt install dwt</div>
+                </div>
+                <div class="card">
+                    <h3>Python</h3>
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">From Source</p>
+                    <div class="code-block">pip install -r requirements.txt</div>
+                </div>
+            </div>
+            <div class="card" style="max-width: 600px; margin: 2rem auto;">
+                <h3>Quick Start (Python)</h3>
+                <div class="code-block">
+# Clone repository<br>
+git clone https://github.com/yourusername/digital-wellbeing-tracker.git<br>
+cd digital-wellbeing-tracker<br>
+<br>
+# Install dependencies<br>
+pip install -r requirements.txt<br>
+<br>
+# Run the application<br>
+python main.py
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="background: rgba(107, 79, 201, 0.03);">
+        <div class="container">
+            <h2>What Users Say</h2>
+            <div class="testimonials">
+                <div class="testimonial">
+                    <p>"Finally, a tracker that respects my privacy! No cloud uploads, no telemetry. This is exactly what developers need."</p>
+                    <p class="author">Sarah Chen</p>
+                    <p class="role">Full-Stack Developer</p>
+                </div>
+                <div class="testimonial">
+                    <p>"The ML insights helped me cut 2 hours of daily distraction. Highly recommend for anyone serious about digital wellbeing."</p>
+                    <p class="author">Alex Rodriguez</p>
+                    <p class="role">Freelance Designer</p>
+                </div>
+                <div class="testimonial">
+                    <p>"Simple, effective, and runs smoothly even on my old Linux laptop. Perfect for students on a budget."</p>
+                    <p class="author">Jordan Kim</p>
+                    <p class="role">CS Student</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" style="background: rgba(107, 79, 201, 0.03);">
+        <div class="container">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Does this send data to the cloud?
+                        <span>▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        No. All data is stored locally in an SQLite database. We have zero cloud sync by default and no telemetry collection.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        How much system resources does it use?
+                        <span>▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Digital Wellbeing Tracker is designed to be lightweight. It uses psutil for efficient monitoring and typically consumes less than 50MB of RAM.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Can I customize tracking intervals?
+                        <span>▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes. The app includes a settings panel where you can configure monitoring frequency, alert thresholds, and app categories.
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFaq(this)">
+                        Is this open source?
+                        <span>▼</span>
+                    </button>
+                    <div class="faq-answer">
+                        Yes! The entire project is open source under the MIT license. You can find the repository on GitHub and contribute.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <p>Have a question? We'd love to hear from you.</p>
+            <form style="max-width: 600px; margin: 2rem auto;" onsubmit="handleSubmit(event)">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Email</label>
+                    <input type="email" required placeholder="your@email.com" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-weight: 500; margin-bottom: 0.5rem;">Message</label>
+                    <textarea required placeholder="Tell us what's on your mind..." rows="5" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem; resize: vertical;"></textarea>
+                </div>
+                <button type="submit" class="cta-btn" style="width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo" style="margin-bottom: 1rem;">
+                        <div class="logo-box">DW</div>
+                        <span>DWT</span>
+                    </div>
+                    <p>Privacy-first digital wellbeing tracker</p>
+                </div>
+                <div>
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#download">Download</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">GitHub</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p style="font-size: 0.875rem; margin-bottom: 0.5rem;">✉️ contact@digitalwellbeing.dev</p>
+                    <a href="https://github.com" target="_blank" style="display: inline-block; margin-top: 0.5rem;">GitHub</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Digital Wellbeing Tracker. All rights reserved.</p>
+                <p>MIT License • Privacy-First • Open Source</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            updateThemeButton();
+        }
+
+        function updateThemeButton() {
+            const btn = document.querySelector('.theme-toggle');
+            btn.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+        }
+
+        // Initialize theme
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark-mode');
+        }
+        updateThemeButton();
+
+        // FAQ Toggle
+        function toggleFaq(button) {
+            const answer = button.nextElementSibling;
+            answer.classList.toggle('open');
+        }
+
+        // Form Submit
+        function handleSubmit(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            e.target.reset();
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
