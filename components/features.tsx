@@ -34,13 +34,17 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6" role="list">
           {features.map((feature, index) => {
             const Icon = feature.icon
             return (
-              <div key={index} className="card-hover group p-6 rounded-xl bg-card border border-border">
+              <div
+                key={index}
+                role="listitem"
+                className="card-hover group p-6 rounded-xl bg-card border border-border focus-within:ring-2 focus-within:ring-primary transition-all"
+              >
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="w-6 h-6 text-primary" />
+                  <Icon className="w-6 h-6 text-primary" aria-hidden="true" />
                 </div>
                 <h3 className="font-bold text-lg mb-2">{feature.title}</h3>
                 <p className="text-foreground/60 text-sm leading-relaxed">{feature.description}</p>

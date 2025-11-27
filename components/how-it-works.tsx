@@ -27,25 +27,39 @@ export default function HowItWorks() {
           <p className="text-foreground/60 max-w-2xl mx-auto text-lg">Three simple steps to better digital habits</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8" role="list">
           {steps.map((step, index) => {
             const Icon = step.icon
             return (
-              <div key={index} className="relative">
+              <div key={index} role="listitem" className="relative">
                 <div className="flex flex-col items-center text-center">
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 relative z-10">
-                    <Icon className="w-8 h-8 text-primary" />
+                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4 relative z-10 group hover:bg-primary/20 transition-colors">
+                    <Icon className="w-8 h-8 text-primary" aria-hidden="true" />
                   </div>
                   <h3 className="font-bold text-xl mb-2">{step.title}</h3>
                   <p className="text-foreground/60">{step.description}</p>
                 </div>
 
+                {/* Connector line */}
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent" />
+                  <div
+                    className="hidden md:block absolute top-8 -right-4 w-8 h-0.5 bg-gradient-to-r from-primary to-transparent"
+                    aria-hidden="true"
+                  />
                 )}
               </div>
             )
           })}
+        </div>
+
+        {/* Timeline visual for mobile */}
+        <div className="md:hidden mt-8 max-w-xs mx-auto space-y-4">
+          {steps.map((_, index) => (
+            <div key={index}>
+              <div className="w-1 h-8 bg-gradient-to-b from-primary/50 to-primary/10 mx-auto" aria-hidden="true" />
+              {index < steps.length - 1 && <div className="h-4" />}
+            </div>
+          ))}
         </div>
       </div>
     </section>

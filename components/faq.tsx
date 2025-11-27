@@ -29,6 +29,10 @@ const faqs = [
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(0)
 
+  const toggleFaq = (index: number) => {
+    setOpenIndex(openIndex === index ? -1 : index)
+  }
+
   return (
     <section id="faq" className="py-20 sm:py-32 bg-muted/30">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -36,20 +40,36 @@ export default function FAQ() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3" role="region" aria-label="Frequently asked questions">
           {faqs.map((faq, index) => (
-            <div key={index} className="rounded-lg border border-border bg-card overflow-hidden">
+            <div
+              key={index}
+              className="rounded-lg border border-border bg-card overflow-hidden focus-within:ring-2 focus-within:ring-primary transition-all"
+            >
               <button
-                onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-                className="w-full px-6 py-4 flex items-center justify-between hover:bg-muted/50 transition-colors"
+                onClick={() => toggleFaq(index)}
+                className="w-full px-6 py-4 flex items-center justify-between hover:bg-muted/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors"
+                aria-expanded={openIndex === index}
+                aria-controls={`faq-answer-${index}`}
+                id={`faq-button-${index}`}
               >
                 <span className="font-medium text-left">{faq.question}</span>
                 <ChevronDown
-                  className={`w-5 h-5 text-primary transition-transform ${openIndex === index ? "rotate-180" : ""}`}
+                  className={`w-5 h-5 text-primary transition-transform flex-shrink-0 ${
+                    openIndex === index ? "rotate-180" : ""
+                  }`}
+                  aria-hidden="true"
                 />
               </button>
               {openIndex === index && (
-                <div className="px-6 py-4 bg-muted/20 border-t border-border text-foreground/70">{faq.answer}</div>
+                <div
+                  id={`faq-answer-${index}`}
+                  className="px-6 py-4 bg-muted/20 border-t border-border text-foreground/70"
+                  role="region"
+                  aria-labelledby={`faq-button-${index}`}
+                >
+                  {faq.answer}
+                </div>
               )}
             </div>
           ))}

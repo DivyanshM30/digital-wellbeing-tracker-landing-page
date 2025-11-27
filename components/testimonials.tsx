@@ -26,16 +26,32 @@ export default function Testimonials() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">What Users Say</h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-6" role="list">
           {testimonials.map((testimonial, index) => (
-            <div key={index} className="p-6 rounded-xl bg-card border border-border card-hover">
-              <p className="text-foreground/70 mb-4 italic">"{testimonial.quote}"</p>
+            <blockquote
+              key={index}
+              role="listitem"
+              className="p-6 rounded-xl bg-card border border-border card-hover focus-within:ring-2 focus-within:ring-primary transition-all"
+            >
+              <p className="text-foreground/70 mb-4 italic" aria-label={`Testimonial from ${testimonial.author}`}>
+                "{testimonial.quote}"
+              </p>
               <div>
                 <p className="font-bold">{testimonial.author}</p>
                 <p className="text-sm text-foreground/60">{testimonial.role}</p>
               </div>
-            </div>
+            </blockquote>
           ))}
+        </div>
+
+        {/* Trust Badges */}
+        <div className="mt-12 text-center">
+          <p className="text-foreground/60 mb-4">Trusted by developers and digital wellness advocates</p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <div className="px-4 py-2 bg-muted rounded-full text-sm font-medium">⭐ Open Source</div>
+            <div className="px-4 py-2 bg-muted rounded-full text-sm font-medium">🔒 Privacy First</div>
+            <div className="px-4 py-2 bg-muted rounded-full text-sm font-medium">🚀 Performance</div>
+          </div>
         </div>
       </div>
     </section>

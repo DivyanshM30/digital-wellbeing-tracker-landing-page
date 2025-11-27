@@ -10,15 +10,23 @@ export default function Analytics() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
-          <div className="rounded-xl overflow-hidden border border-border bg-card p-6">
-            <img src="/bar-chart-showing-app-usage-hours.jpg" alt="App Usage Chart" className="w-full h-auto rounded-lg" />
-            <p className="mt-4 text-center text-sm text-foreground/60">Daily App Usage Distribution</p>
-          </div>
+          <figure className="rounded-xl overflow-hidden border border-border bg-card p-6">
+            <img
+              src="/bar-chart-showing-app-usage-hours.jpg"
+              alt="Bar chart showing daily app usage distribution across different applications"
+              className="w-full h-auto rounded-lg"
+            />
+            <figcaption className="mt-4 text-center text-sm text-foreground/60">Daily App Usage Distribution</figcaption>
+          </figure>
 
-          <div className="rounded-xl overflow-hidden border border-border bg-card p-6">
-            <img src="/pie-chart-showing-productivity-vs-social-media-spl.jpg" alt="Category Breakdown" className="w-full h-auto rounded-lg" />
-            <p className="mt-4 text-center text-sm text-foreground/60">Category Breakdown Analysis</p>
-          </div>
+          <figure className="rounded-xl overflow-hidden border border-border bg-card p-6">
+            <img
+              src="/pie-chart-showing-productivity-vs-social-media-spl.jpg"
+              alt="Pie chart showing the breakdown of screen time by category: productivity apps versus social media"
+              className="w-full h-auto rounded-lg"
+            />
+            <figcaption className="mt-4 text-center text-sm text-foreground/60">Category Breakdown Analysis</figcaption>
+          </figure>
         </div>
 
         <div className="mt-8 p-6 rounded-xl bg-accent/5 border border-accent/20">
